@@ -1,0 +1,5 @@
+// Badge color
+@mixin badge-background($back, $color) {
+  background-color: $back !important;
+  color: $color !important;
+}

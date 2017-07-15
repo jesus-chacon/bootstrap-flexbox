@@ -1,0 +1,168 @@
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `$grid-columns`.
+
+// [converter] This is defined recursively in LESS, but Sass supports real loops
+@mixin make-grid-columns($i: 1, $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}") {
+  @for $i from 1 + 1 through $grid-columns {
+    $list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}, .col-xl-#{$i}";
+  }
+
+  #{$list} {
+    position: relative;
+
+    // Prevent columns from collapsing when empty
+    min-height: 1px;
+
+    // Inner gutter via padding
+    padding-left: ceil($grid-gutter-width / 2);
+    padding-right: floor($grid-gutter-width / 2);
+  }
+}
+
+// [converter] This is defined recursively in LESS, but Sass supports real loops
+@mixin float-grid-columns($class, $i: 1, $list: ".col-#{$class}-#{$i}") {
+  @for $i from 1 + 1 through $grid-columns {
+    $list: "#{$list}, .col-#{$class}-#{$i}";
+  }
+
+  #{$list} {
+    float: left;
+    box-sizing: border-box;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+}
+
+@mixin calc-grid-column($index, $class, $type) {
+  @if $type == width and $index > 0 {
+    .col-#{$class}-#{$index} {
+      -ms-flex-preferred-size: percentage($index / $grid-columns);
+      flex-basis: percentage($index / $grid-columns);
+      max-width: percentage($index / $grid-columns);
+      width: percentage($index / $grid-columns);
+    }
+  }
+
+  @if $type == push and $index > 0 {
+    .col-#{$class}-push-#{$index} {
+      left: percentage($index / $grid-columns);
+    }
+  }
+
+  @if $type == push and $index == 0 {
+    .col-#{$class}-push-0 {
+      left: auto;
+    }
+  }
+
+  @if $type == pull and $index > 0 {
+    .col-#{$class}-pull-#{$index} {
+      right: percentage($index / $grid-columns);
+    }
+  }
+
+  @if $type == pull and $index == 0 {
+    .col-#{$class}-pull-0 {
+      right: auto;
+    }
+  }
+
+  @if $type == offset {
+    .col-#{$class}-offset-#{$index} {
+      margin-left: percentage($index / $grid-columns);
+    }
+  }
+}
+
+// [converter] This is defined recursively in LESS, but Sass supports real loops
+@mixin loop-grid-columns($columns, $class, $type) {
+  @for $i from 0 through $columns {
+    @include calc-grid-column($i, $class, $type);
+  }
+}
+
+@mixin tools-flexbox($class){
+  .start-#{$class} {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    text-align: start;
+  }
+
+  .center-#{$class} {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .end-#{$class} {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    text-align: end;
+  }
+
+  .top-#{$class} {
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+
+  .middle-#{$class} {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .bottom-#{$class} {
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+
+  .around-#{$class} {
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+  }
+
+  .between-#{$class} {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+
+  .first-#{$class} {
+    -webkit-box-ordinal-group: 0;
+    -ms-flex-order: -1;
+    order: -1;
+  }
+
+  .last-#{$class} {
+    -webkit-box-ordinal-group: 2;
+    -ms-flex-order: 1;
+    order: 1;
+  }
+}
+
+// Create grid for specific class
+@mixin make-grid($class) {
+  .col-#{$class} {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+  }
+
+  @include float-grid-columns($class);
+  @include loop-grid-columns($grid-columns, $class, width);
+  @include loop-grid-columns($grid-columns, $class, pull);
+  @include loop-grid-columns($grid-columns, $class, push);
+  @include loop-grid-columns($grid-columns, $class, offset);
+  @include tools-flexbox($class);
+}

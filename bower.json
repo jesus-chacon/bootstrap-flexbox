@@ -1,23 +1,24 @@
 {
-  "name": "bootstrap-flexbox",
-  "description": "Sass project to build bootstrap v3 with flexbox",
-  "main": "gulpfile.js",
-  "authors": [
-    "Jesús Cautivo Chacón Ávila"
-  ],
-  "license": "ISC",
-  "keywords": [
-    "Sass",
-    "bootstrap",
-    "flexbox",
-    "bootstrap3"
-  ],
-  "homepage": "https://github.com/jesus-chacon/bootstrap-flexbox",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
+    "name": "bootstrap-box",
+    "version": "1.0.0",
+    "description": "Sass project to build bootstrap v3 with flexbox",
+    "main": "gulpfile.js",
+    "authors": [
+        "Jesús Cautivo Chacón Ávila"
+    ],
+    "license": "ISC",
+    "keywords": [
+        "Sass",
+        "bootstrap",
+        "flexbox",
+        "bootstrap3"
+    ],
+    "homepage": "https://github.com/jesus-chacon/bootstrap-flexbox",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
 }
